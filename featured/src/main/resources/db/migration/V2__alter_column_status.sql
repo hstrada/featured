@@ -1,0 +1,1 @@
+ALTER TABLE toggles RENAME COLUMN decision TO status;
