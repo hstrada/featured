@@ -1,6 +1,6 @@
 package io.example.featured.resources.toggles
 
-import io.example.featured.entities.PageResponse
+import io.example.featured.common.PageResponse
 import io.example.featured.entities.Toggle
 import io.example.featured.enums.ToggleStatus
 import org.springframework.data.domain.Page

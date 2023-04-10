@@ -1,4 +1,4 @@
-package io.example.featured.entities
+package io.example.featured.common
 
 class PageResponse<T>(
     var items: List<T>,

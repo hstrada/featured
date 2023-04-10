@@ -1,6 +1,6 @@
 package io.example.featured.resources
 
-import io.example.featured.entities.PageResponse
+import io.example.featured.common.PageResponse
 import io.example.featured.entities.Toggle
 import io.example.featured.resources.toggles.PostToggleRequest
 import io.example.featured.resources.toggles.PutToggleRequest
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
@@ -39,6 +40,9 @@ class ToggleResource (
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Int): Toggle = toggleService.findById(id);
+
+    @GetMapping("/search")
+    fun findByName(@RequestParam name: String): Toggle = toggleService.findByName(name);
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
