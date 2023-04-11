@@ -1,14 +1,12 @@
 package io.example.toggled.feature
 
 import arrow.core.Either
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
-import org.springframework.web.reactive.function.client.bodyToMono
-import reactor.core.publisher.Mono
 
 @Service
 class DefaultFeatureService : FeatureService {
@@ -20,7 +18,7 @@ class DefaultFeatureService : FeatureService {
         either {
             client
                 .get()
-                .uri("/api/toggles/search?name=Feature_A1")
+                .uri("/api/toggles/search?name=${featureName.name}")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .awaitBody()

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.7.10"
 	id("io.spring.dependency-management") version "1.0.15.RELEASE"
-	kotlin("jvm") version "1.6.21"
+	kotlin("jvm") version "1.8.20"
 	kotlin("plugin.spring") version "1.6.21"
 }
 
@@ -29,8 +29,8 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	implementation("io.arrow-kt:arrow-core:1.1.5")
-	implementation("io.arrow-kt:arrow-fx-coroutines:1.1.5")
+	implementation("io.arrow-kt:arrow-core:1.2.0-RC")
+	implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0-RC")
 }
 
 tasks.withType<KotlinCompile> {

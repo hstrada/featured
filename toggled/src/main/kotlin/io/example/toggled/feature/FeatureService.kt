@@ -2,7 +2,6 @@ package io.example.toggled.feature
 
 import arrow.core.Either
 import arrow.core.getOrElse
-import reactor.core.publisher.Mono
 
 interface FeatureService {
 
@@ -13,7 +12,7 @@ interface FeatureService {
     enum class FeatureStatus { ON, OFF }
 
     data class Feature(
-        val name: FeatureName,
+        val name: String,
         val status: String,
     )
 
