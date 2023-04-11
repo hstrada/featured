@@ -17,18 +17,20 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
-	implementation("org.springframework.boot:spring-boot-starter-webflux:2.6.3")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.0")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-	implementation("io.arrow-kt:arrow-core:1.1.2")
-	implementation("io.arrow-kt:arrow-fx-coroutines:1.1.2")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+//	implementation("io.arrow-kt:arrow-core:1.1.5")
+//	implementation("io.arrow-kt:arrow-fx-coroutines:1.1.5")
 }
 
 tasks.withType<KotlinCompile> {

@@ -11,9 +11,9 @@ interface FeatureService {
     enum class FeatureStatus { ON, OFF }
 
     data class Feature(
-        val name: FeatureName,
+        val name: String,
         val status: String,
     )
 
-    suspend fun isEnabled(featureName: FeatureName): Mono<Boolean>
+    suspend fun isEnabled(featureName: FeatureName): Boolean
 }
