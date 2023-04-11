@@ -29,8 +29,8 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-//	implementation("io.arrow-kt:arrow-core:1.1.5")
-//	implementation("io.arrow-kt:arrow-fx-coroutines:1.1.5")
+	implementation("io.arrow-kt:arrow-core:1.1.5")
+	implementation("io.arrow-kt:arrow-fx-coroutines:1.1.5")
 }
 
 tasks.withType<KotlinCompile> {

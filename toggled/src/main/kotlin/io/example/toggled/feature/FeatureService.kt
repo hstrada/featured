@@ -1,5 +1,7 @@
 package io.example.toggled.feature
 
+import arrow.core.Either
+import arrow.core.getOrElse
 import reactor.core.publisher.Mono
 
 interface FeatureService {
@@ -11,9 +13,15 @@ interface FeatureService {
     enum class FeatureStatus { ON, OFF }
 
     data class Feature(
-        val name: String,
+        val name: FeatureName,
         val status: String,
     )
 
-    suspend fun isEnabled(featureName: FeatureName): Boolean
+    suspend fun fetchFeature(featureName: FeatureName):
+            Either<Exception, Feature>
+
+    suspend fun isEnabled(featureName: FeatureName): Boolean =
+        fetchFeature(featureName)
+            .map { FeatureStatus.valueOf(it.status) == FeatureStatus.ON }
+            .getOrElse { false }
 }
