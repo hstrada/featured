@@ -2,8 +2,11 @@ package io.example.toggled.feature
 
 import arrow.core.Either
 import arrow.core.raise.either
+import io.example.toggled.config.CacheConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.redis.cache.RedisCacheConfiguration
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
@@ -15,15 +18,20 @@ class DefaultFeatureService : FeatureService {
     @Autowired
     lateinit var client: WebClient
 
+    @Autowired
+    lateinit var redisTemplate: RedisTemplate<String, String>
+
     @Cacheable("feature", key = "#featureName")
     override suspend fun fetchFeature(featureName: FeatureService.FeatureName): Either<Exception, FeatureService.Feature> =
-        either {
+        either<Exception, FeatureService.Feature> {
             client
                 .get()
                 .uri("/api/toggles/search?name=${featureName.name}")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .awaitBody()
+        }.onRight {
+            redisTemplate.opsForList().leftPush(it.name, it.toString())
         }
 
 }

@@ -16,6 +16,7 @@ class ToggledController(
     @GetMapping
     suspend fun feature() {
         val a = feature.isEnabled(FeatureService.FeatureName.FeatureC)
+
         println(a)
         ok()
     }
