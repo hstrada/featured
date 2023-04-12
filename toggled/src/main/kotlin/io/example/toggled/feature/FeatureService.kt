@@ -7,6 +7,7 @@ interface FeatureService {
 
     sealed class FeatureName(val name: String) {
         object FeatureA1 : FeatureName("Feature_A1")
+        object FeatureC : FeatureName("feature_c")
     }
 
     enum class FeatureStatus { ON, OFF }
