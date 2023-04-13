@@ -6,6 +6,7 @@ import io.example.toggled.config.CacheConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.redis.cache.RedisCacheConfiguration
+import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -13,15 +14,11 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
 
 @Service
-class DefaultFeatureService : FeatureService {
+class DefaultFeatureService(
+    private val redisTemplate: ReactiveRedisTemplate<String, String>,
+    private val client: WebClient
+) : FeatureService {
 
-    @Autowired
-    lateinit var client: WebClient
-
-    @Autowired
-    lateinit var redisTemplate: RedisTemplate<String, String>
-
-    @Cacheable("feature", key = "#featureName")
     override suspend fun fetchFeature(featureName: FeatureService.FeatureName): Either<Exception, FeatureService.Feature> =
         either<Exception, FeatureService.Feature> {
             client
@@ -31,7 +28,7 @@ class DefaultFeatureService : FeatureService {
                 .retrieve()
                 .awaitBody()
         }.onRight {
-            redisTemplate.opsForList().leftPush(it.name, it.toString())
+            redisTemplate.opsForValue().set(it.name, it.toString())
         }
 
 }
