@@ -2,6 +2,7 @@ package io.example.toggled.feature
 
 import arrow.core.Either
 import arrow.core.raise.either
+import io.example.toggled.cache.CacheService
 import io.example.toggled.config.CacheConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
@@ -15,12 +16,13 @@ import org.springframework.web.reactive.function.client.awaitBody
 
 @Service
 class DefaultFeatureService(
-    private val redisTemplate: ReactiveRedisTemplate<String, String>,
+    private val cache: CacheService,
     private val client: WebClient
 ) : FeatureService {
 
     override suspend fun fetchFeature(featureName: FeatureService.FeatureName): Either<Exception, FeatureService.Feature> =
         either<Exception, FeatureService.Feature> {
+            println(cache.get(featureName.name))
             client
                 .get()
                 .uri("/api/toggles/search?name=${featureName.name}")
@@ -28,7 +30,7 @@ class DefaultFeatureService(
                 .retrieve()
                 .awaitBody()
         }.onRight {
-            redisTemplate.opsForValue().set(it.name, it.toString())
+            cache.set(it.name, it.status)
         }
 
 }
