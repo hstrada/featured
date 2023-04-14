@@ -1,8 +1,5 @@
 package io.example.toggled.feature
 
-import arrow.core.Either
-import arrow.core.getOrElse
-
 interface FeatureService {
 
     sealed class FeatureName(val name: String) {
@@ -17,11 +14,8 @@ interface FeatureService {
         val status: String,
     )
 
-    suspend fun fetchFeature(featureName: FeatureName):
-            Either<Exception, Feature>
+    suspend fun fetchFeature(featureName: FeatureName): Feature
 
     suspend fun isEnabled(featureName: FeatureName): Boolean =
-        fetchFeature(featureName)
-            .map { FeatureStatus.valueOf(it.status) == FeatureStatus.ON }
-            .getOrElse { false }
+        FeatureStatus.valueOf(fetchFeature(featureName).status) == FeatureStatus.ON
 }
