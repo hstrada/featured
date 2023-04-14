@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class RedisCacheService(
-    private val redisTemplate: RedisTemplate<String, String>,
+    private val reactiveRedisTemplate: RedisTemplate<String, String>,
 ) : CacheService {
     override fun set(key: String, value: String) {
-        redisTemplate.opsForList().leftPush(key, value)
+        reactiveRedisTemplate.opsForValue().set(key, value)
     }
 
-    override fun get(key: String): String? = redisTemplate.opsForList().leftPop(key)
+    override fun get(key: String): String? = reactiveRedisTemplate.opsForValue().get(key)
 }
