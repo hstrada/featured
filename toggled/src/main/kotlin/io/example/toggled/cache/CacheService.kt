@@ -1,5 +1,7 @@
 package io.example.toggled.cache
 
+import java.time.Duration
+
 /**
  *
  * Cache interface that will have the get on set methods
@@ -11,7 +13,7 @@ interface CacheService {
      * @param   key     key name that will be used to save data into cache
      * @param   value   value that will be saved into key
      */
-    fun set(key: String, value: String)
+    fun set(key: String, value: String, time: Duration)
 
     /**
      * This method is used to load data from cache
