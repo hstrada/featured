@@ -4,7 +4,6 @@ import io.example.toggled.ext.FIVE_MINUTES
 import io.example.toggled.ext.JSON
 import io.example.toggled.http.HttpService
 import org.springframework.stereotype.Service
-import java.time.Duration
 
 @Service
 class DefaultFeatureHandler(
