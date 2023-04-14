@@ -20,7 +20,7 @@ CREATE DATABASE featured
 
 You can click on the play button on your favorite IDE ou you can simply run on terminal:
 
-> ./gradlew bootJar
+> ./gradlew bootRun
 
 ## Requests
 
