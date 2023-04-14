@@ -1,6 +1,8 @@
 package io.example.toggled.feature
 
-interface FeatureService {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
+interface FeatureHandler {
 
     sealed class FeatureName(val name: String) {
         object FeatureA1 : FeatureName("Feature_A1")
@@ -9,13 +11,14 @@ interface FeatureService {
 
     enum class FeatureStatus { ON, OFF }
 
+    @JsonIgnoreProperties(value = ["id"])
     data class Feature(
         val name: String,
         val status: String,
     )
 
-    suspend fun fetchFeature(featureName: FeatureName): Feature
+    suspend fun fetchFeature(featureName: FeatureName): Feature?
 
     suspend fun isEnabled(featureName: FeatureName): Boolean =
-        FeatureStatus.valueOf(fetchFeature(featureName).status) == FeatureStatus.ON
+        fetchFeature(featureName)?.status?.let { FeatureStatus.valueOf(it) } == FeatureStatus.ON
 }
